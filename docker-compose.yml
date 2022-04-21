@@ -5,7 +5,7 @@ services:
     image: traefik:v2.6
     container_name: traefik
     labels:
-      - "traefik.http.routers.api.rule=Host(`ytza.com.br`)"
+      - "traefik.http.routers.api.rule=Host(`monitor.ytza.com.br`)"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=pedro.correa:{SHA}XDvSwwql4/c5b49J8NDVMUQQhxY="
