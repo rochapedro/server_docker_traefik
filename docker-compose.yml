@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  traefik:
+    image: traefik:v2.6
+    container_name: traefik
+    labels:
+      - "traefik.http.routers.api.rule=Host(`ytza.com.br`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=pedro.correa:{SHA}XDvSwwql4/c5b49J8NDVMUQQhxY="
+      - "traefik.http.routers.traefik.entrypoints=websecurity"
+      - "traefik.http.routers.traefik.tls.certresolver=myresolver"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yml:/traefik.yml
+      - ./acme.json:/acme.json
+      - ./traefik.log:/traefik.log
+    networks:
+      traefik_network:
+networks:
+  traefik_network:
+    name: traefik_net
+    driver: bridge
+    ipam:
+      driver: default
